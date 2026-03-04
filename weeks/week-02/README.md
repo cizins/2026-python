@@ -2,7 +2,7 @@
 
 - 主題：資料結構基礎（序列與字典技巧，排序與計數）
 - 解題：本週無 `QUESTION-*.md`（題目已順延至 Week 03）
-- 作業：完成 GitHub 提交流程演練（分支、commit、PR）
+- 作業：完成排序與序列處理作業（[HOMEWORK.md](./HOMEWORK.md)）
 - 本週 GitHub 操作流程：[GITHUB_WORKFLOW.md](./GITHUB_WORKFLOW.md)
 
 ---
