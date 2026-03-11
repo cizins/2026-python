@@ -1,0 +1,77 @@
+=== 完整的測試紀錄 (含繁體中文註解增強) ===
+執行時間: 2026-03-11 18:31:57
+
+====== Unit Test 結果 ======
+test_cycle_in_ascending_order (test_question_100.TestEdgeCases)
+測試 cycle-length 並不總是隨著 n 遞增而遞增。 ... ok
+test_odd_number_sequence (test_question_100.TestEdgeCases)
+測試奇數。奇數會被乘以 3 再加 1，變成偶數後開始分割。 ... ok
+test_power_of_two_sequences (test_question_100.TestEdgeCases)
+測試 2 的冪次。 ... ok
+test_cache_improves_performance (test_question_100.TestQuestion100)
+測試快取機制：計算相同的數多次應回傳相同結果。 ... ok
+test_cache_usage_in_range (test_question_100.TestQuestion100)
+測試在區間查詢中的快取效果。 ... ok
+test_cycle_length_10 (test_question_100.TestQuestion100)
+測試 n=10 ... ok
+test_cycle_length_16 (test_question_100.TestQuestion100)
+測試 n=16（2 的冪次） ... ok
+test_cycle_length_22 (test_question_100.TestQuestion100)
+測試例題中的案例：n=22 應回傳 16 ... ok
+test_cycle_length_base_case_1 (test_question_100.TestQuestion100)
+測試基礎情況：n=1 應回傳 1 ... ok
+test_cycle_length_large_number (test_question_100.TestQuestion100)
+測試較大的數值 ... ok
+test_cycle_length_small_even (test_question_100.TestQuestion100)
+測試小的偶數：n=2 ... ok
+test_cycle_length_small_odd (test_question_100.TestQuestion100)
+測試小的奇數：n=3 ... ok
+test_max_cycle_length_100_to_200 (test_question_100.TestQuestion100)
+測試區間 [100, 200]，預期最大 cycle-length 為 125 ... ok
+test_max_cycle_length_1_to_10 (test_question_100.TestQuestion100)
+測試區間 [1, 10]，預期最大 cycle-length 為 20 ... ok
+test_max_cycle_length_201_to_210 (test_question_100.TestQuestion100)
+測試區間 [201, 210]，預期最大 cycle-length 為 89 ... ok
+test_max_cycle_length_900_to_1000 (test_question_100.TestQuestion100)
+測試區間 [900, 1000]，預期最大 cycle-length 為 174 ... ok
+test_max_cycle_length_large_range (test_question_100.TestQuestion100)
+測試較大區間 ... ok
+test_max_cycle_length_reversed_large_range (test_question_100.TestQuestion100)
+測試大區間的順序顛倒情況 ... ok
+test_max_cycle_length_reversed_order (test_question_100.TestQuestion100)
+測試區間輸入順序顛倒的情況。 ... ok
+test_max_cycle_length_single_point (test_question_100.TestQuestion100)
+測試區間退化為單點的情況：[5, 5] ... ok
+test_max_cycle_length_single_point_1 (test_question_100.TestQuestion100)
+測試單點區間：[1, 1] ... ok
+test_max_cycle_length_two_consecutive (test_question_100.TestQuestion100)
+測試相鄰區間：[5, 6] ... ok
+
+----------------------------------------------------------------------
+Ran 22 tests in 0.001s
+
+OK
+
+====== 解決方案執行測試 ======
+============================================================
+題目 100 - Collatz 序列 解決方案執行測試
+============================================================
+
+測試結果對比：
+------------------------------------------------------------
+測試             輸入            預期         實際     狀態        
+------------------------------------------------------------
+測試 1  (  1, 10)          20          20✓ PASS
+測試 2  (100,200)         125         125✓ PASS
+測試 3  (201,210)          89          89✓ PASS
+測試 4  (900,1000)         174         174✓ PASS
+------------------------------------------------------------
+
+測試摘要：
+總測試數             4
+通過數              4
+失敗數              0
+
+✓ 所有測試通過！
+
+============================================================
