@@ -9,12 +9,12 @@ sys.path.insert(0, current_dir)
 
 # 由於 118-easy.py 含有特殊字元 '-'，無法直接使用 import 載入
 # 需要透過 importlib 手動匯入模組
-spec_std = importlib.util.spec_from_file_location("std_118", os.path.join(current_dir, "118.py"))
+spec_std = importlib.util.spec_from_file_location("std_118", os.path.join(current_dir, "..", "118.py"))
 if spec_std and spec_std.loader:
     std_118 = importlib.util.module_from_spec(spec_std)
     spec_std.loader.exec_module(std_118)
 
-spec_easy = importlib.util.spec_from_file_location("easy_118", os.path.join(current_dir, "118-easy.py"))
+spec_easy = importlib.util.spec_from_file_location("easy_118", os.path.join(current_dir, "..", "118-easy.py"))
 if spec_easy and spec_easy.loader:
     easy_118 = importlib.util.module_from_spec(spec_easy)
     spec_easy.loader.exec_module(easy_118)

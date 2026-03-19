@@ -8,12 +8,12 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, current_dir)
 
 # 透過 importlib 手動匯入模組，解決檔名包含特殊字元 '-' 的問題
-spec_std = importlib.util.spec_from_file_location("std_299", os.path.join(current_dir, "299.py"))
+spec_std = importlib.util.spec_from_file_location("std_299", os.path.join(current_dir, "..", "299.py"))
 if spec_std and spec_std.loader:
     std_299 = importlib.util.module_from_spec(spec_std)
     spec_std.loader.exec_module(std_299)
 
-spec_easy = importlib.util.spec_from_file_location("easy_299", os.path.join(current_dir, "299-easy.py"))
+spec_easy = importlib.util.spec_from_file_location("easy_299", os.path.join(current_dir, "..", "299-easy.py"))
 if spec_easy and spec_easy.loader:
     easy_299 = importlib.util.module_from_spec(spec_easy)
     spec_easy.loader.exec_module(easy_299)
