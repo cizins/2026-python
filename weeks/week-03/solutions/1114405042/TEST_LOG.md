@@ -1,55 +1,64 @@
 # 測試日誌 (TEST_LOG) - Week 03 作業
 
 ## 執行紀錄：UVA 118
-
-- 執行指令：`python3 test_uva_118.py`
-- 結果摘要：
-  - 測試總數：3 (包含標準版、簡單版及邊界測資)
-  - 通過：3
-  - 失敗：0
-  - 錯誤：0
-- 關鍵問題與修正：
-  - 初始邊界測資（連續同一點掉落）時，預期輸出不慎將有氣味保護下的機器人標示為 `LOST`，導致 `AssertionError`。
-  - 修正：將邊界測資預期輸出修正為只保留正確掉落的機器人，成功全數通過 (`OK`)。
+- 執行指令：`python3 test_118.py -v`
+- 執行結果：
+  ```
+  test_easy_solution (__main__.TestUVA118) ... ok
+  test_empty_input (__main__.TestUVA118) ... ok
+  test_standard_solution (__main__.TestUVA118) ... ok
+  ----------------------------------------------------------------------
+  Ran 3 tests in 0.000s
+  OK
+  ```
+- 結論：標準版與簡單版 (`-easy`) 皆正確處理機器人轉向、移動與氣味 (Scent) 掉落機制。
 
 ---
 
 ## 執行紀錄：UVA 272
-
-- 執行指令：`python3 test_uva_272.py`
-- 結果摘要：
-  - 測試總數：3 (包含標準版、簡單版及邊界測資)
-  - 通過：3
-  - 失敗：0
-  - 錯誤：0
-- 關鍵問題與修正：
-  - 邊界測資撰寫時，不慎將空字串內的引號轉換預期寫錯（`""` 連在一起），導致 `AssertionError`。
-  - 修正：調整 `test_uva_272.py` 中的預期輸出字串後，測試順利通過 (`OK`)。
+- 執行指令：`python3 test_272.py -v`
+- 執行結果：
+  ```
+  test_easy_solution (__main__.TestUVA272) ... ok
+  test_empty_input (__main__.TestUVA272) ... ok
+  test_multiple_nested_quotes (__main__.TestUVA272) ... ok
+  test_no_quotes (__main__.TestUVA272) ... ok
+  test_standard_solution (__main__.TestUVA272) ... ok
+  ----------------------------------------------------------------------
+  Ran 5 tests in 0.000s
+  OK
+  ```
+- 結論：文字與雙引號替換成功，交替使用 ` `` ` 與 ` '' ` 邏輯完美通過，邊界條件（沒有引號或多重引號）也順利通過。
 
 ---
 
 ## 執行紀錄：UVA 299
-
-- 執行指令：`python3 test_uva_299.py`
-- 結果摘要：
-  - 測試總數：3 (包含標準版、簡單版及邊界測資)
-  - 通過：3
-  - 失敗：0
-  - 錯誤：0
-- 關鍵問題與修正：
-  - 一次性通過所有測試 (`OK`)。
-  - 包含空陣列以及完全反序陣列的邊界情況，均正確返回泡沫排序所需的交換次數。
+- 執行指令：`python3 test_299.py -v`
+- 執行結果：
+  ```
+  test_already_sorted (__main__.TestUVA299) ... ok
+  test_easy_solution (__main__.TestUVA299) ... ok
+  test_empty_input (__main__.TestUVA299) ... ok
+  test_standard_solution (__main__.TestUVA299) ... ok
+  test_zero_trains (__main__.TestUVA299) ... ok
+  ----------------------------------------------------------------------
+  Ran 5 tests in 0.000s
+  OK
+  ```
+- 結論：利用計算「逆序對 (Inversions)」的方法成功取得最佳交換次數，0 個車廂或已排好序的極端測資皆輸出 0 swaps，符合預期。
 
 ---
 
 ## 執行紀錄：UVA 490
-
-- 執行指令：`python3 test_uva_490.py`
-- 結果摘要：
-  - 測試總數：3 (包含標準版、簡單版及邊界測資)
-  - 通過：3
-  - 失敗：0
-  - 錯誤：0
-- 關鍵問題與修正：
-  - 一次性通過所有測試 (`OK`)。
-  - 針對 `-easy` 版利用 `ljust` 來補齊空白的解法，正確處理了長短不一字串順時針旋轉可能發生的缺角問題。
+- 執行指令：`python3 test_490.py -v`
+- 執行結果：
+  ```
+  test_different_lengths_with_middle_short (__main__.TestUVA490) ... ok
+  test_easy_solution (__main__.TestUVA490) ... ok
+  test_empty_input (__main__.TestUVA490) ... ok
+  test_standard_solution (__main__.TestUVA490) ... ok
+  ----------------------------------------------------------------------
+  Ran 4 tests in 0.000s
+  OK
+  ```
+- 結論：無論句子長短，皆能以順時針 90 度旋轉並正確補上空白字元。
