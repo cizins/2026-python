@@ -1,51 +1,51 @@
-# Week 02 Assignment - Sequence & Ranking Solutions
+# Week 02 作業 - 序列與排名問題解決方案
 
-## Assignment Overview
+## 作業總覽
 
-This assignment implements three tasks using **Test-Oriented Development (TDD)** methodology:
+本作業使用 **測試驅動開發 (Test-Oriented Development, TDD)** 方法實作了三個任務：
 
-1. **Task 1: Sequence Clean** - Deduplication, sorting, and filtering operations
-2. **Task 2: Student Ranking** - Multi-key sorting with tie-breaking
-3. **Task 3: Log Summary** - Event counting and aggregation
-
----
-
-## Completion Checklist
-
-- [x] Task 1: Sequence Clean - Complete
-- [x] Task 2: Student Ranking - Complete
-- [x] Task 3: Log Summary - Complete
-- [x] Test Suite: 38 tests (14 + 12 + 12) - All passing
-- [x] TEST_LOG.md: Red → Green → Refactor documentation
-- [x] TEST_CASES.md: Custom test data with analysis
-- [x] AI_USAGE.md: AI assistance tracking
+1. **Task 1: 序列清理 (Sequence Clean)** - 去重、排序與過濾操作
+2. **Task 2: 學生排名 (Student Ranking)** - 多鍵值排序與同分判定
+3. **Task 3: 日誌摘要 (Log Summary)** - 事件計數與資料聚合
 
 ---
 
-## Execution Instructions
+## 完成檢查表
 
-### Python Version
+- [x] Task 1: 序列清理 - 已完成
+- [x] Task 2: 學生排名 - 已完成
+- [x] Task 3: 日誌摘要 - 已完成
+- [x] 測試套件: 38 個測試 (14 + 12 + 12) - 全部通過
+- [x] TEST_LOG.md: 記錄紅燈 → 綠燈 → 重構 (Red → Green → Refactor) 流程
+- [x] TEST_CASES.md: 自訂測試資料與分析
+- [x] AI_USAGE.md: AI 輔助使用紀錄
+
+---
+
+## 執行說明
+
+### Python 版本
 ```
 Python 3.9.6
 ```
 
-### Run Program Examples
+### 執行程式範例
 
-#### Task 1: Sequence Clean
+#### Task 1: 序列清理
 ```bash
 python task1_sequence_clean.py
-# Input: 5 3 5 2 9 2 8 3 1
-# Output:
+# 輸入: 5 3 5 2 9 2 8 3 1
+# 輸出:
 # dedupe: 5 3 2 9 8 1
 # asc: 1 2 2 3 3 5 5 8 9
 # desc: 9 8 5 5 3 3 2 2 1
 # evens: 2 2 8
 ```
 
-#### Task 2: Student Ranking
+#### Task 2: 學生排名
 ```bash
 python task2_student_ranking.py
-# Input:
+# 輸入:
 # 6 3
 # amy 88 20
 # bob 88 19
@@ -54,16 +54,16 @@ python task2_student_ranking.py
 # leo 75 20
 # eva 92 20
 #
-# Output:
+# 輸出:
 # eva 92 20
 # zoe 92 21
 # bob 88 19
 ```
 
-#### Task 3: Log Summary
+#### Task 3: 日誌摘要
 ```bash
 python task3_log_summary.py
-# Input:
+# 輸入:
 # 8
 # alice login
 # bob login
@@ -74,19 +74,19 @@ python task3_log_summary.py
 # chris login
 # bob logout
 #
-# Output:
+# 輸出:
 # bob 4
 # alice 3
 # chris 1
 # top_action: login 3
 ```
 
-### Run All Tests
+### 執行所有測試
 ```bash
 python -m unittest discover -s tests -p "test_*.py" -v
 ```
 
-### Test Execution Output
+### 測試執行結果
 ```
 Ran 38 tests in 0.001s
 
@@ -95,11 +95,11 @@ OK
 
 ---
 
-## Data Structure Choices & Rationale
+## 資料結構選擇與理由
 
-### Task 1: Sequence Clean
+### Task 1: 序列清理
 
-**Deduplication Approach**: Set-based tracking with list preservation
+**去重方法**: 基於 Set 並保留原本 List 順序
 ```python
 seen = set()
 result = []
@@ -108,182 +108,182 @@ for num in nums:
         seen.add(num)
         result.append(num)
 ```
-- **Rationale**: O(n) time complexity while preserving first-occurrence order
-- **Alternative Rejected**: Using `dict.fromkeys()` also works but less explicit about dedup order
+- **理由**: 擁有 O(n) 的時間複雜度，同時能保留元素第一次出現的順序
+- **捨棄的方案**: 使用 `dict.fromkeys()` 雖然可行，但在表達去重順序上不夠直覺
 
-**Sorting**: Built-in `sorted()` function
-- **Rationale**: Python's Timsort is O(n log n) and stable, perfect for our needs
-- **Why not manual sort**: Reinventing sort is error-prone; trust standard library
+**排序**: 內建 `sorted()` 函數
+- **理由**: Python 的 Timsort 演算法具備 O(n log n) 複雜度且穩定 (stable)，完全符合需求
+- **為何不手寫排序**: 重新發明排序容易出錯，應信任標準函式庫
 
-**Even Filter**: List comprehension with modulo check
-- **Rationale**: Concise, readable, idiomatic Python. O(n) scan to preserve order
+**偶數過濾**: 使用列表生成式 (List comprehension) 加上取餘數檢查
+- **理由**: 簡潔、易讀、符合 Python 慣用語。O(n) 掃描即可保持原有順序
 
 ---
 
-### Task 2: Student Ranking
+### Task 2: 學生排名
 
-**Multi-key Sorting**: Lambda tuple key
+**多鍵值排序**: 使用 lambda tuple 作為 key
 ```python
 sorted(students, key=lambda x: (-x[1], x[2], x[0]))
 ```
-- **Rationale**: Single sort with tuple unpacking handles all three criteria in one pass
-- **Score Negation**: `-x[1]` achieves descending sort while keeping others ascending
-- **Why not multiple sorts**: Reverse multiple sorts less efficient and harder to read
+- **理由**: 單次排序搭配 Tuple 解包，能一次處理三個條件
+- **分數取負值**: `-x[1]` 能夠達成降序排序，同時保持其他條件為升序
+- **為何不使用多次排序**: 反向進行多次排序效率較低且難以閱讀
 
-**Alternative Rejected**: Using `functools.cmp_to_key` or `operator.itemgetter` - lambda is clearer here
+**捨棄的方案**: 使用 `functools.cmp_to_key` 或 `operator.itemgetter` - 在這裡使用 lambda 更加清晰
 
 ---
 
-### Task 3: Log Summary
+### Task 3: 日誌摘要
 
-**User Counting**: `defaultdict(int)` 
-- **Rationale**: Implicit 0 initialization for unseen users; O(1) lookup/insert
-- **Why not Counter**: Counter preferred for action counts due to `most_common()` method
+**使用者計數**: `defaultdict(int)` 
+- **理由**: 遇到未見過的使用者時隱式初始化為 0；具備 O(1) 的尋找/插入時間
+- **為何不用 Counter**: Counter 更適合用於動作計數，因為它有 `most_common()` 方法
 
-**Action Counting**: `Counter` from collections
-- **Rationale**: Built-in `most_common(1)` is efficient; avoids manual max finding
-- **Why not dict**: Counter has specialized methods and clearer intent
+**動作計數**: collections 中的 `Counter`
+- **理由**: 內建的 `most_common(1)` 非常有效率；避免手動尋找最大值
+- **為何不用 dict**: Counter 擁有專門的方法，且意圖更加明確
 
-**User Sorting**: Lambda with negative count
+**使用者排序**: 使用 lambda 搭配負數計數
 ```python
 sorted(..., key=lambda x: (-x[1], x[0]))
 ```
-- **Rationale**: Parallels Task 2 multi-key pattern; count descending, name ascending
+- **理由**: 與 Task 2 的多鍵值模式類似；計數降序，名稱升序
 
 ---
 
-## Bug Encountered & Resolution
+## 遇到的 Bug 與解決方法
 
-### Bug: Task 1 - Negative Number Even Detection
+### Bug: Task 1 - 負數的偶數判定
 
-**Problem**: Initial code would crash on negative numbers due to Python's floor division behavior
+**問題**: 初始程式碼遇到負數時，可能會因為 Python 的地板除法行為而有問題
 ```python
-# Initial: if num % 2 == 0:  # This works fine but needed testing
+# 初始版本: if num % 2 == 0:  # 其實這運作正常，但需要經過測試確認
 ```
 
-**Error Observed**: No error initially (modulo behavior is well-defined), but tests revealed missing coverage
+**觀察到的錯誤**: 剛開始沒有錯誤 (取餘數行為有明確定義)，但測試揭露了覆蓋率不足的問題。
 
-**Root Cause**: Test case `test_negative_evens` highlighted that negative evens (`-4`, `-2`) should be included
+**根本原因**: 測試案例 `test_negative_evens` 突顯出必須確保負偶數 (`-4`, `-2`) 也被包含進去。
 
-**Solution Applied**: 
+**應用的解決方案**: 
 ```python
 def _is_even(num):
     return num % 2 == 0
 ```
 
-**Why It Works**: Python's modulo for negative numbers follows: `-4 % 2 == 0` and `-3 % 2 == 1`, so even detection works correctly
+**為何有效**: Python 對於負數的取餘數規則是：`-4 % 2 == 0` 和 `-3 % 2 == 1`，所以偶數檢測能夠正確運作。
 
-**Test Coverage**: Added `test_negative_evens()` and `test_zero_in_list()` to verify correctness
+**測試覆蓋率**: 加入了 `test_negative_evens()` 與 `test_zero_in_list()` 來驗證正確性。
 
 ---
 
-## TDD Process Summary
+## TDD 流程總結
 
-### Task 1: Sequence Clean
+### Task 1: 序列清理
 
-**RED Phase**:
-- Wrote 14 tests covering normal cases (dedupe, sort asc/desc, evens), boundaries (empty, single), and edge cases (negatives, zero)
-- All tests failed due to missing functions
+**紅燈階段 (RED Phase)**:
+- 撰寫 14 個測試，涵蓋正常情況 (去重、升降序、偶數)、邊界情況 (空列表、單一元素) 以及極端情況 (負數、零)。
+- 所有測試一開始都因缺少函式而失敗。
 
-**GREEN Phase**:
-- Implemented 5 functions with minimal code
-- All 14 tests passed immediately
+**綠燈階段 (GREEN Phase)**:
+- 實作了 5 個函式，撰寫最少量的程式碼。
+- 14 個測試立刻全部通過。
 
-**REFACTOR Phase**:
-- Extracted `_is_even()` helper to reduce duplication
-- Enhanced docstrings with complexity notes
-- All tests still pass; code more maintainable
+**重構階段 (REFACTOR Phase)**:
+- 抽離出 `_is_even()` 輔助函式以減少重複程式碼。
+- 擴充 docstrings 加上複雜度說明。
+- 所有測試依然通過；程式碼變得更易維護。
 
-### Task 2: Student Ranking
+### Task 2: 學生排名
 
-**RED Phase**:
-- Wrote 12 tests focusing on multi-key sorting and tie-breaking
-- Tests covered normal ranking, age/name breaking, boundary k values
-- All tests failed (function unimplemented)
+**紅燈階段 (RED Phase)**:
+- 撰寫 12 個測試，專注於多鍵值排序與同分處理。
+- 測試涵蓋了正常排名、年齡/名字的打破僵局規則、以及 k 值的邊界情況。
+- 所有測試均失敗 (函式尚未實作)。
 
-**GREEN Phase**:
-- Implemented main function with input parsing + sorting in one pass
-- Used lambda tuple key for elegant multi-condition sort
-- All 12 tests passed on first try
+**綠燈階段 (GREEN Phase)**:
+- 實作主函式，將輸入解析與排序在一次流程中完成。
+- 使用 lambda tuple key 進行優雅的多條件排序。
+- 12 個測試第一次執行就全數通過。
 
-**REFACTOR Phase**:
-- Extracted `_parse_input()` and `_sort_by_ranking()` for clarity
-- Separated concerns: parsing → sorting → formatting
-- All tests pass; code more modular for future enhancements
+**重構階段 (REFACTOR Phase)**:
+- 抽離出 `_parse_input()` 和 `_sort_by_ranking()` 以提升清晰度。
+- 關注點分離 (Separation of concerns)：解析 → 排序 → 格式化。
+- 測試全過；模組化更佳，有利於未來擴充。
 
-### Task 3: Log Summary
+### Task 3: 日誌摘要
 
-**RED Phase**:
-- Wrote 12 tests for user counting, action frequency, and sorting
-- Covered edge case of empty logs, tied user counts, and top action detection
-- All tests failed initially
+**紅燈階段 (RED Phase)**:
+- 撰寫 12 個測試，針對使用者計數、動作頻率與排序。
+- 涵蓋空日誌、使用者計數平手、以及尋找最常出現的動作等極端情況。
+- 測試初始皆為失敗。
 
-**GREEN Phase**:
-- Implemented main function using defaultdict + Counter
-- Proper sorting with count descending, name ascending
-- All 12 tests passed
+**綠燈階段 (GREEN Phase)**:
+- 使用 defaultdict + Counter 實作主函式。
+- 確保計數降序、名稱升序的正確排序邏輯。
+- 12 個測試順利通過。
 
-**REFACTOR Phase**:
-- Extracted 4 helper functions: parse, count_users, count_actions, sort_users
-- Each function has single responsibility
-- All tests pass; code more testable and documented
+**重構階段 (REFACTOR Phase)**:
+- 抽離出 4 個輔助函式：parse, count_users, count_actions, sort_users。
+- 每個函式都具有單一職責 (Single responsibility)。
+- 測試全過；程式碼可測試性與文件化程度提升。
 
-### Overall Statistics
+### 整體統計
 
-| Phase | Total Tests | Passed | Failed | Time |
+| 階段 | 總測試數 | 通過 | 失敗 | 耗時 |
 |-------|-------------|--------|--------|------|
 | RED   | 38          | 0      | 38*    | N/A  |
 | GREEN | 38          | 38     | 0      | 0.001s |
 | REFACTOR | 38       | 38     | 0      | 0.001s |
 
-*RED failures due to import errors (functions not implemented), not assertion failures
+*RED 階段的失敗是因為匯入錯誤 (函式尚未實作)，而非斷言失敗。
 
 ---
 
-## Test Coverage Analysis
+## 測試覆蓋率分析
 
-### By Type
-- **Normal Cases** (15 tests): Standard inputs with expected variations
-- **Boundary Cases** (13 tests): Empty/single/min/max values
-- **Edge Cases** (10 tests): Negative numbers, ties, zero, identical values
+### 依類型
+- **正常情況** (15 個測試): 標準輸入與預期內的變化
+- **邊界情況** (13 個測試): 空陣列/單一元素/極大極小值
+- **極端情況** (10 個測試): 負數、平手、零、完全相同的數值
 
-### By Aspect
-- **Correctness**: All tests pass on first GREEN attempt
-- **Edge Handling**: Empty lists, zero, negatives, identical values covered
-- **Sorting Stability**: Verified with multiple identical records
-- **Output Formatting**: String representation matches spec exactly
-
----
-
-## Key Learnings
-
-1. **TDD Enforces Clarity**: Writing tests first forced clear thinking about requirements and edge cases
-2. **Refactoring Confidence**: All tests passing post-refactor confirmed no regression
-3. **Helper Functions Matter**: Extracting `_is_even()`, `_parse_input()`, etc. improved readability without performance cost
-4. **Multi-key Sorting**: Lambda tuple approach is elegant and efficient for ranking problems
-5. **Edge Case Discovery**: Tests revealed importance of handling empty inputs, zero, negatives
+### 依面向
+- **正確性**: 所有測試都在第一次 GREEN 嘗試中通過
+- **邊界處理**: 涵蓋了空列表、零、負數與重複數值
+- **排序穩定性**: 透過多個相同的紀錄進行驗證
+- **輸出格式**: 字串呈現完全符合規格要求
 
 ---
 
-## Files Submitted
+## 主要學習與心得
+
+1. **TDD 強制提升清晰度**: 先寫測試迫使我在實作前釐清需求與極端情況。
+2. **重構的信心**: 重構後測試全數通過，確保了沒有發生退化 (Regression)。
+3. **輔助函式的重要性**: 抽離 `_is_even()`, `_parse_input()` 等函式，在不影響效能的前提下大幅提升可讀性。
+4. **多鍵值排序**: Lambda tuple 的方法在處理排名問題時既優雅又高效。
+5. **發掘極端情況**: 測試過程揭露了處理空輸入、零與負數的重要性。
+
+---
+
+## 提交檔案清單
 
 ```
-weeks/week-02/solutions/student-1114405042/
-├── task1_sequence_clean.py       # 88 lines, 5 functions
-├── task2_student_ranking.py      # 81 lines, 3 functions
-├── task3_log_summary.py          # 105 lines, 5 functions
+weeks/week-02/solutions/1114405042/
+├── task1_sequence_clean.py       # 88 行, 5 個函式
+├── task2_student_ranking.py      # 81 行, 3 個函式
+├── task3_log_summary.py          # 105 行, 5 個函式
 ├── tests/
-│   ├── test_task1.py             # 14 test functions
-│   ├── test_task2.py             # 12 test functions
-│   └── test_task3.py             # 12 test functions
-├── TEST_LOG.md                   # Detailed RED→GREEN→REFACTOR log
-├── TEST_CASES.md                 # 5 custom test datasets
-├── AI_USAGE.md                   # AI assistance documentation
-└── README.md                      # This file
+│   ├── test_task1.py             # 14 個測試函式
+│   ├── test_task2.py             # 12 個測試函式
+│   └── test_task3.py             # 12 個測試函式
+├── TEST_LOG.md                   # 詳盡的 RED→GREEN→REFACTOR 記錄
+├── TEST_CASES.md                 # 5 組自訂測試資料
+├── AI_USAGE.md                   # AI 輔助文件
+└── README.md                     # 本檔案
 ```
 
 ---
 
-## Conclusion
+## 結論
 
-This assignment successfully demonstrates Test-Oriented Development with complete Red → Green → Refactor cycles. All 38 tests pass, code is well-refactored with clear separation of concerns, and comprehensive documentation is provided for future reference.
+本次作業成功展示了測試驅動開發 (TDD) 方法，完成了完整的 紅燈 → 綠燈 → 重構 循環。總計 38 個測試全部通過，程式碼經過良好重構並具備清晰的關注點分離，同時提供了完善的文件以供未來參考。

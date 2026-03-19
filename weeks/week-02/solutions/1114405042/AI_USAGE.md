@@ -1,52 +1,52 @@
-# AI Usage Documentation - Week 02 TDD Assignment
+# AI 輔助使用紀錄 - Week 02 TDD 作業
 
-This document records how AI assistance was used throughout the test-driven development process, focusing on transparency and learning outcomes.
+本文件記錄了在測試驅動開發 (TDD) 過程中，如何使用 AI 輔助，重點在於透明度與學習成果。
 
 ---
 
-## Questions Posed to AI
+## 向 AI 提出的問題
 
-### Topic 1: Multi-Key Sorting in Python
+### 主題 1: Python 中的多鍵值排序 (Multi-Key Sorting)
 
-**Question 1.1**: "How do I sort students by multiple criteria in Python using the `sorted()` function?"
+**問題 1.1**: "如何在 Python 中使用 `sorted()` 函式，根據多個條件對學生進行排序？"
 
-**AI Suggestion**:
-> Use `sorted()` with a lambda function that returns a tuple of sort keys. Elements are compared element-by-element in the tuple.
+**AI 建議**:
+> 使用 `sorted()` 搭配 lambda 函式，回傳一個包含排序鍵值的 Tuple。Tuple 內的元素會逐一進行比較。
 ```python
 sorted(students, key=lambda x: (score, age, name))
 ```
 
-**My Evaluation**: ✓ **ADOPTED**
-- Verified this works for ascending order
-- For descending score: use negative: `key=lambda x: (-score, age, name)`
-- Tested with Task 2 tie-breaking scenarios
-- All 12 tests pass with this approach
+**我的評估**: ✓ **採用 (ADOPTED)**
+- 驗證了這對於升序排列有效。
+- 對於降序的分數：使用負號：`key=lambda x: (-score, age, name)`。
+- 在 Task 2 的同分打破僵局情境下進行了測試。
+- 使用這個方法，12 個測試全數通過。
 
-**Why I Trusted It**: Lambda tuple sorting is standard Python pattern, well-established in documentation
-
----
-
-**Question 1.2**: "Is Python's `sorted()` function stable? What does that mean for my ranking algorithm?"
-
-**AI Suggestion**:
-> Yes, Python's `sorted()` uses Timsort which is stable. This means equal elements maintain their relative order from the original list.
-
-**My Evaluation**: ✓ **ADOPTED & VERIFIED**
-- Confirmed through tests: `test_identical_students_multiple` passes with alphabetical ordering
-- Stability is important for Task 3 (action frequency counting)
-- No regressions observed
-
-**Impact**: Stable sort allows chaining operations confidence
+**為何信任此建議**: Lambda tuple 排序是標準的 Python 寫法，在官方文件中也有詳細記載。
 
 ---
 
-### Topic 2: Set-Based Deduplication
+**問題 1.2**: "Python 的 `sorted()` 函式是穩定的 (stable) 嗎？這對我的排名演算法有何意義？"
 
-**Question 2.1**: "How do I remove duplicates from a list while preserving order?"
+**AI 建議**:
+> 是的，Python 的 `sorted()` 使用 Timsort，這是一種穩定的排序演算法。這意味著相等的元素會保持它們在原始列表中的相對順序。
 
-**AI Suggestions** (Multiple approaches):
+**我的評估**: ✓ **採用並驗證 (ADOPTED & VERIFIED)**
+- 透過測試確認：`test_identical_students_multiple` 成功通過了字母順序的測試。
+- 穩定性對 Task 3 (動作頻率計數) 非常重要。
+- 未觀察到退化 (regressions)。
 
-**Option A**: Set-based (recommended)
+**影響**: 穩定的排序讓我可以放心地串聯多個操作。
+
+---
+
+### 主題 2: 基於 Set 的去重 (Deduplication)
+
+**問題 2.1**: "如何從列表中移除重複項，同時保留原始順序？"
+
+**AI 建議** (多種方法):
+
+**選項 A**: 基於 Set (推薦)
 ```python
 seen = set()
 result = []
@@ -56,312 +56,312 @@ for item in items:
         result.append(item)
 ```
 
-**Option B**: Dict.fromkeys()
+**選項 B**: Dict.fromkeys()
 ```python
 list(dict.fromkeys(items))
 ```
 
-**Option C**: Custom dedup with list lookups (inefficient)
+**選項 C**: 使用列表尋找的自訂去重 (效率低)
 ```python
 result = [x for i, x in enumerate(items) if x not in items[:i]]
 ```
 
-**My Evaluation**: ✓ **ADOPTED Option A, REJECTED Options B & C**
+**我的評估**: ✓ **採用選項 A，拒絕選項 B & C**
 
-**Rationale**:
-- **Option A (CHOSEN)**: O(n) time complexity, explicit about set tracking, educational
-- **Option B (REJECTED)**: Also works but less obvious why it preserves order; less explicit
-- **Option C (REJECTED)**: O(n²) time complexity, not acceptable for larger lists
+**理由**:
+- **選項 A (採納)**: O(n) 時間複雜度，明確表達了使用 set 進行追蹤，具備教育意義。
+- **選項 B (拒絕)**: 雖然可行，但保留順序的原因不夠直覺，較不明確。
+- **選項 C (拒絕)**: O(n²) 時間複雜度，對於較大的列表不可接受。
 
-**Verification**: Task 1 test `test_dedup_preserves_order` passes, confirming order preservation
+**驗證**: Task 1 的 `test_dedup_preserves_order` 測試通過，確認了順序被保留。
 
-**Key Learning**: When multiple solutions exist, choose one that's both efficient AND clear to future reader
-
----
-
-**Question 2.2**: "Will negative numbers work with set-based deduplication?"
-
-**AI Response**: 
-> Yes, sets in Python can contain any hashable type including negative integers. The `in` operator works identically for negative numbers.
-
-**My Evaluation**: ✓ **VERIFIED THROUGH TESTING**
-- Test case `test_negative_evens` confirms: `-4, -2` are correctly tracked
-- No special handling needed
+**主要學習**: 當存在多種解決方案時，選擇對未來閱讀者來說既高效又清晰的那一個。
 
 ---
 
-### Topic 3: Event Counting with Collections
+**問題 2.2**: "負數適用於基於 set 的去重嗎？"
 
-**Question 3.1**: "Should I use `defaultdict`, `Counter`, or plain `dict` for counting events?"
+**AI 回覆**: 
+> 是的，Python 中的 set 可以包含任何可雜湊 (hashable) 的型別，包含負整數。`in` 運算子對負數的作用完全相同。
 
-**AI Comparison**:
-| Approach | Concept | Best For |
+**我的評估**: ✓ **透過測試驗證 (VERIFIED THROUGH TESTING)**
+- 測試案例 `test_negative_evens` 確認了：`-4, -2` 被正確地追蹤。
+- 不需要特殊處理。
+
+---
+
+### 主題 3: 使用 Collections 進行事件計數
+
+**問題 3.1**: "我應該使用 `defaultdict`, `Counter`, 還是普通的 `dict` 來計算事件？"
+
+**AI 比較**:
+| 方法 | 概念 | 最適用於 |
 |----------|---------|----------|
-| `defaultdict(int)` | Default value factory | Simple counting with implicit 0 |
-| `Counter` | Specialized dict subclass | Frequency counting + `most_common()` |
-| `dict` with `.get()` | Manual default handling | Fine-grained control |
+| `defaultdict(int)` | 預設值工廠 | 簡單的計數，隱式初始化為 0 |
+| `Counter` | 特化的 dict 子類別 | 頻率計數 + `most_common()` |
+| `dict` 搭配 `.get()` | 手動處理預設值 | 細粒度控制 |
 
-**My Evaluation**: ✓ **ADOPTED Hybrid Approach**
-- Used `defaultdict(int)` for user event counting (Task 3)
-- Used `Counter` for action frequency counting (Task 3)
-- Each tool for its specific job
+**我的評估**: ✓ **採用混合方法 (ADOPTED Hybrid Approach)**
+- 使用 `defaultdict(int)` 計算使用者事件 (Task 3)。
+- 使用 `Counter` 計算動作頻率 (Task 3)。
+- 讓每個工具發揮其專長。
 
-**Verification**: Task 3 tests pass with this hybrid approach
+**驗證**: Task 3 的測試在此混合方法下全數通過。
 
-**Reasoning**:
+**理由**:
 ```python
-user_counts = defaultdict(int)  # Simple, clean for basic counting
-action_counts = Counter()        # Has built-in most_common() method
+user_counts = defaultdict(int)  # 簡單、乾淨地進行基本計數
+action_counts = Counter()        # 具備內建的 most_common() 方法
 ```
 
 ---
 
-**Question 3.2**: "How do I find the most frequent element when using `defaultdict`?"
+**問題 3.2**: "使用 `defaultdict` 時，如何找到出現頻率最高的元素？"
 
-**AI Suggestion**:
-> If using `defaultdict`, you need to manually find max:
+**AI 建議**:
+> 如果使用 `defaultdict`，你需要手動尋找最大值：
 ```python
 max(counter.items(), key=lambda x: x[1])
 ```
-> But use `Counter.most_common(1)[0]` if you switched to Counter.
+> 但如果切換到 `Counter`，請使用 `Counter.most_common(1)[0]`。
 
-**My Evaluation**: ✓ **ADOPTED**
-- Used Counter specifically to leverage `most_common()` method
-- Cleaner code than manual max finding
-- Test `test_top_action_most_frequent` confirms correctness
-
----
-
-### Topic 4: Edge Case Handling
-
-**Question 4.1**: "How should I handle empty input lists in my functions?"
-
-**AI Suggestions**:
-- Return empty list (for sequences)
-- Return empty dict/counter (for aggregation)
-- Special case output (for summaries)
-
-**My Evaluation**: ✓ **PARTIALLY ADOPTED**
-
-**Implementation**:
-- Task 1: `deduplicate_sequence([])` returns `[]` ✓
-- Task 2: Not applicable (k must be ≥1)
-- Task 3: Returns "top_action: 0\n" as graceful degradation
-
-**Test Coverage**: `test_empty_list`, `test_empty_logs` pass
+**我的評估**: ✓ **採用 (ADOPTED)**
+- 特別使用 `Counter` 來利用 `most_common()` 方法。
+- 程式碼比手動尋找最大值更乾淨。
+- 測試 `test_top_action_most_frequent` 確認了正確性。
 
 ---
 
-**Question 4.2**: "Is zero considered even in Python?"
+### 主題 4: 邊界情況處理 (Edge Case Handling)
 
-**AI Response**:
-> Yes, `0 % 2 == 0`, so zero is even by mathematical definition.
+**問題 4.1**: "我應該如何在函式中處理空的輸入列表？"
 
-**My Evaluation**: ✓ **VERIFIED & IMPLEMENTED**
-- Added test case `test_zero_in_list`
-- Confirmed: `extract_evens([0, 1, 2, 3])` returns `[0, 2]`
-- Implementation correctly handles zero
+**AI 建議**:
+- 回傳空列表 (針對序列)
+- 回傳空的 dict/counter (針對聚合)
+- 特殊情況輸出 (針對摘要)
 
----
+**我的評估**: ✓ **部分採用 (PARTIALLY ADOPTED)**
 
-### Topic 5: Code Refactoring Best Practices
+**實作**:
+- Task 1: `deduplicate_sequence([])` 回傳 `[]` ✓
+- Task 2: 不適用 (k 必須 ≥1)
+- Task 3: 回傳 "top_action: 0\n" 作為優雅降級 (graceful degradation)
 
-**Question 5.1**: "How should I extract helper functions without changing test results?"
-
-**AI Suggestions**:
-1. Preserve function signatures of main functions
-2. Extract new `_private_functions` (with leading underscore)
-3. Run tests after each extraction to confirm no regression
-4. Focus on reducing duplication, not adding code
-
-**My Evaluation**: ✓ **ADOPTED & VERIFIED**
-
-**Applied To**:
-- Task 1: Extracted `_is_even()` helper
-  - Reduced code duplication in `extract_evens()` and nearby logic
-  - All 14 tests pass post-refactor
-
-- Task 2: Extracted `_parse_input()` and `_sort_by_ranking()`
-  - Separated concerns: parsing, sorting, formatting
-  - All 12 tests pass post-refactor
-
-- Task 3: Extracted 4 helpers: `_parse_logs()`, `_count_user_events()`, `_count_actions()`, `_sort_users_by_count()`
-  - Each function has single responsibility
-  - All 12 tests pass post-refactor
-
-**Key Learning**: Refactoring with passing tests as safety net is powerful TDD practice
+**測試覆蓋率**: `test_empty_list`, `test_empty_logs` 均通過。
 
 ---
 
-**Question 5.2**: "Is it okay to add docstrings and type hints after tests pass?"
+**問題 4.2**: "在 Python 中，零 (0) 算作偶數嗎？"
 
-**AI Response**:
-> Yes, documentation is a form of refactoring. It doesn't change behavior, only improves clarity. Add it during REFACTOR phase.
+**AI 回覆**:
+> 是的，`0 % 2 == 0`，所以根據數學定義，零是偶數。
 
-**My Evaluation**: ✓ **ADOPTED**
-- Enhanced all docstrings with Args, Returns, Examples
-- Added complexity notes where relevant
-- No test failures from documentation changes
-
----
-
-## AI Suggestions I Rejected & Why
-
-### Rejection 1: Using `list.sort()` Instead of `sorted()`
-
-**AI Suggestion**: "You could also use `list.sort()` for in-place sorting, which is slightly more efficient."
-
-**My Response**: ✗ **REJECTED**
-- Reason: In-place sorting not needed; `sorted()` returns new list, clearer for functional approach
-- Task 2 requires sorting that doesn't modify input
-- `sorted()` allows chaining, better for readable one-liners
-- Immutability principle preferred
+**我的評估**: ✓ **驗證並實作 (VERIFIED & IMPLEMENTED)**
+- 新增了測試案例 `test_zero_in_list`。
+- 確認：`extract_evens([0, 1, 2, 3])` 回傳 `[0, 2]`。
+- 實作正確地處理了零。
 
 ---
 
-### Rejection 2: Using `@dataclass` for Student Records
+### 主題 5: 程式碼重構最佳實踐
 
-**AI Suggestion**: "Consider using `@dataclass` or named tuples to structure student records instead of plain tuples."
+**問題 5.1**: "我應該如何抽出輔助函式而不改變測試結果？"
 
-**My Response**: ✗ **REJECTED**
-- Reason: Over-engineering for this problem scope
-- Tuples with index access `[0]=name, [1]=score, [2]=age` sufficient
-- Dataclass adds complexity without testing benefit
-- Tuple approach matches problem input format naturally
+**AI 建議**:
+1. 保持主函式的簽名 (signatures) 不變。
+2. 抽出新的 `_private_functions` (帶有前導底線)。
+3. 在每次抽出後執行測試，確認沒有發生退化。
+4. 專注於減少重複，而不是增加程式碼。
 
----
+**我的評估**: ✓ **採用並驗證 (ADOPTED & VERIFIED)**
 
-### Rejection 3: Using `functools.reduce()` for Counting
+**應用於**:
+- Task 1: 抽出 `_is_even()` 輔助函式
+  - 減少了 `extract_evens()` 與附近邏輯中的重複程式碼。
+  - 重構後 14 個測試依然通過。
 
-**AI Suggestion**: "You could use `functools.reduce()` to aggregate logs in a functional style."
+- Task 2: 抽出 `_parse_input()` 與 `_sort_by_ranking()`
+  - 關注點分離：解析、排序、格式化。
+  - 重構後 12 個測試依然通過。
 
-**My Response**: ✗ **REJECTED**
-- Reason: For-loop approach more readable than reduce
-- Reduce would obscure the simple counting logic
-- Team maintainability over clever functional programming
-- Tests don't require functional approach
+- Task 3: 抽出 4 個輔助函式：`_parse_logs()`, `_count_user_events()`, `_count_actions()`, `_sort_users_by_count()`
+  - 每個函式都具有單一職責。
+  - 重構後 12 個測試依然通過。
 
----
-
-### Rejection 4: Optimizing Task 1 with NumPy
-
-**AI Suggestion**: "For large datasets, consider using NumPy arrays for faster performance."
-
-**My Response**: ✗ **REJECTED**
-- Reason: Task specification prohibits external packages
-- NumPy not allowed (only Python built-ins)
-- Pure Python approach sufficient for requirements
-- Test cases don't indicate performance bottleneck
+**主要學習**: 在測試通過的安全網下進行重構，是強大的 TDD 實踐。
 
 ---
 
-## Cases Where AI Guidance Required Verification
+**問題 5.2**: "在測試通過後加上 docstrings 和型別提示 (type hints) 可以嗎？"
 
-### Case 1: Negative Number Modulo Behavior
+**AI 回覆**:
+> 是的，文件化是重構的一種形式。它不會改變行為，只會提高清晰度。請在重構 (REFACTOR) 階段加入。
 
-**AI Claim**: "Python's modulo works the same for positive and negative: `-4 % 2 == 0`"
+**我的評估**: ✓ **採用 (ADOPTED)**
+- 擴充了所有 docstrings，包含 Args, Returns, Examples。
+- 在相關處加上了複雜度註解。
+- 文件變更沒有導致任何測試失敗。
 
-**My Verification**:
+---
+
+## 我拒絕的 AI 建議與原因
+
+### 拒絕 1: 使用 `list.sort()` 代替 `sorted()`
+
+**AI 建議**: "你也可以使用 `list.sort()` 進行就地排序 (in-place sorting)，這稍微高效一點。"
+
+**我的回應**: ✗ **拒絕 (REJECTED)**
+- 原因：不需要就地排序；`sorted()` 回傳新列表，對於函數式風格更清晰。
+- Task 2 需要不會修改輸入的排序。
+- `sorted()` 允許串聯，更適合可讀的一行程式碼 (one-liners)。
+- 偏好不可變性 (Immutability) 原則。
+
+---
+
+### 拒絕 2: 使用 `@dataclass` 建立學生紀錄
+
+**AI 建議**: "考慮使用 `@dataclass` 或具名元組 (named tuples) 來建構學生紀錄，而不是普通的 tuples。"
+
+**我的回應**: ✗ **拒絕 (REJECTED)**
+- 原因：對於這個問題的範圍來說過度設計 (Over-engineering)。
+- 使用索引存取的 tuples `[0]=name, [1]=score, [2]=age` 就足夠了。
+- Dataclass 會增加複雜度，且對測試沒有幫助。
+- Tuple 方法自然地契合了問題的輸入格式。
+
+---
+
+### 拒絕 3: 使用 `functools.reduce()` 進行計數
+
+**AI 建議**: "你可以使用 `functools.reduce()` 以函數式風格來聚合日誌。"
+
+**我的回應**: ✗ **拒絕 (REJECTED)**
+- 原因：for 迴圈方法比 reduce 更具可讀性。
+- Reduce 會掩蓋簡單的計數邏輯。
+- 團隊的可維護性大於聰明的函數式編程。
+- 測試並不要求函數式方法。
+
+---
+
+### 拒絕 4: 使用 NumPy 優化 Task 1
+
+**AI 建議**: "對於大型資料集，考慮使用 NumPy 陣列以獲得更快的效能。"
+
+**我的回應**: ✗ **拒絕 (REJECTED)**
+- 原因：作業規範禁止使用外部套件。
+- NumPy 不被允許 (只能使用 Python 內建)。
+- 純 Python 方法已經足夠滿足需求。
+- 測試案例並未顯示有效能瓶頸。
+
+---
+
+## 需要我自行驗證 AI 指導的案例
+
+### 案例 1: 負數的取餘數行為
+
+**AI 聲稱**: "Python 的取餘數對正負數的運作方式相同：`-4 % 2 == 0`"
+
+**我的驗證**:
 ```python
-# Testing in Python:
-print(-4 % 2)    # Expected: 0 (even)
-print(-3 % 2)    # Expected: 1 (odd)
-print(-2 % 2)    # Expected: 0 (even)
+# 在 Python 中測試：
+print(-4 % 2)    # 預期：0 (偶數)
+print(-3 % 2)    # 預期：1 (奇數)
+print(-2 % 2)    # 預期：0 (偶數)
 ```
 
-**Result**: ✓ CONFIRMED
-- AI was correct about Python's floor division behavior
-- Added test `test_negative_evens` to document this
+**結果**: ✓ 已確認 (CONFIRMED)
+- AI 對於 Python 的地板除法行為是正確的。
+- 加入了測試 `test_negative_evens` 來記錄這點。
 
-**Learning**: Mathematical behavior in one language can differ by version/implementation; always test critical assumptions
+**學習**: 數學行為在不同語言的版本/實作上可能會有所不同；永遠要測試關鍵假設。
 
 ---
 
-### Case 2: Sort Stability with Identical Tuples
+### 案例 2: 包含相同 Tuples 的穩定排序
 
-**AI Claim**: "Stable sort maintains original order for equal elements."
+**AI 聲稱**: "穩定的排序會維持相等元素的原始順序。"
 
-**My Verification**:
+**我的驗證**:
 ```python
-# Task 2: Multiple students with identical (score, age)
-# Input: [(alice 88 20), (bob 88 20), (charlie 88 20)]
-# Expected output maintains insertion order
+# Task 2: 多個具有相同 (分數, 年齡) 的學生
+# 輸入: [(alice 88 20), (bob 88 20), (charlie 88 20)]
+# 預期輸出維持插入順序
 ```
 
-**Result**: ✓ CONFIRMED
-- Test `test_identical_students_multiple` verifies this
-- Alphabetical sort correctly implements the secondary tier
+**結果**: ✓ 已確認 (CONFIRMED)
+- 測試 `test_identical_students_multiple` 驗證了這點。
+- 字母排序正確地實作了次要層級。
 
-**Learning**: Test your assumptions about language behavior with actual test cases
+**學習**: 用實際的測試案例來測試你對語言行為的假設。
 
 ---
 
-### Case 3: Counter.most_common() Behavior with Ties
+### 案例 3: Counter.most_common() 在平手時的行為
 
-**AI Claim**: "Counter.most_common() returns elements in arbitrary order when there are ties."
+**AI 聲稱**: "當存在平手時，Counter.most_common() 會以任意順序回傳元素。"
 
-**My Test**:
+**我的測試**:
 ```python
-# When multiple actions have same count:
+# 當多個動作有相同計數時：
 action_counts = Counter({'login': 2, 'view': 2, 'delete': 2})
-top = action_counts.most_common(1)  # Which one?
+top = action_counts.most_common(1)  # 會是哪一個？
 ```
 
-**Result**: Verified through test `test_all_same_action`
-- Counter returns one of them (doesn't matter which for this assignment)
-- Tests don't require specific action when tied
-- Documented this behavior in test comments
+**結果**: 透過測試 `test_all_same_action` 驗證
+- Counter 會回傳其中之一（這對本作業來說沒差）。
+- 測試不要求平手時要有特定的動作。
+- 在測試註解中記錄了這個行為。
 
 ---
 
-## Summary of AI Assistance Impact
+## AI 輔助影響總結
 
-### Helpful Contributions
-- Multi-key sorting explanation with lambda tuples
-- Collections module guidance (defaultdict vs Counter)
-- Refactoring best practices with test safety
-- Edge case thinking (empty input, zero, negatives)
+### 有用的貢獻
+- 使用 lambda tuples 解釋多鍵值排序。
+- Collections 模組指南 (defaultdict vs Counter)。
+- 具備測試安全性的重構最佳實踐。
+- 邊界情況思考 (空輸入、零、負數)。
 
-### Areas Where Self-Verification Was Critical
-- Negative number math in Python
-- Stable sort behavior with ties
-- Counter behavior with identical frequencies
-- Edge case behavior assumptions
+### 需要自我驗證的關鍵領域
+- Python 中的負數數學。
+- 遇到平手時的穩定排序行為。
+- 相同頻率下的 Counter 行為。
+- 邊界情況的行為假設。
 
-### Overall Assessment
-- **AI Effectiveness**: 85% - Most suggestions were sound; required verification for critical assumptions
-- **Learning Gained**: 90% - Process of verification taught more than AI suggestions themselves
-- **Code Quality**: All suggestions that were adopted improved clarity without compromising correctness
-
----
-
-## Key Lesson: AI as Thought Partner, Not Authority
-
-This assignment reinforced an important principle:
-> AI is most effective when used as a thought partner to explore options, not as an authority for final answers. Always:
-1. Understand the why behind AI suggestions
-2. Test critical assumptions with code
-3. Verify edge cases through actual execution
-4. Trust tests more than explanations
+### 整體評估
+- **AI 有效性**: 85% - 大多數建議是可靠的；對關鍵假設需要進行驗證。
+- **獲得的學習**: 90% - 驗證的過程比 AI 的建議本身教會了我更多。
+- **程式碼品質**: 所有被採用的建議都在不妥協正確性的前提下提高了清晰度。
 
 ---
 
-## Recommendations for Future AI Usage
+## 關鍵教訓：AI 作為思考夥伴，而非權威
 
-1. **For Algorithm Design**: Accept suggestions but verify with small test cases
-2. **For Syntax Questions**: Higher trust (e.g., lambda sorting), but still verify once
-3. **For Edge Cases**: Discuss with AI, then implement defensive tests
-4. **For Refactoring**: Use AI for suggestions, but require all tests still pass
-5. **For Documentation**: AI can improve clarity; review for accuracy
+本作業強化了一個重要原則：
+> 將 AI 作為思考夥伴來探索選項時最為有效，而不是把它當作最終答案的權威。永遠要：
+1. 理解 AI 建議背後的原因 (`why`)。
+2. 用程式碼測試關鍵假設。
+3. 透過實際執行來驗證邊界情況。
+4. 信任測試多於解釋。
 
 ---
 
-## Final Reflection
+## 未來使用 AI 的建議
 
-The TDD process made AI usage transparent and accountable:
-- Tests serve as spec for evaluating AI suggestions
-- If tests pass after accepting AI suggestion, it's likely correct
-- If tests fail, must reject or modify suggestion
-- This creates objective feedback loop
+1. **對於演算法設計**: 接受建議，但用小型測試案例進行驗證。
+2. **對於語法問題**: 信任度較高 (例如 lambda 排序)，但仍需驗證一次。
+3. **對於邊界情況**: 與 AI 討論，然後實作防禦性測試。
+4. **對於重構**: 使用 AI 提供建議，但要求所有測試依然必須通過。
+5. **對於文件化**: AI 可以提升清晰度；需要審查準確性。
 
-This is fundamentally different from accepting AI code without testing—here, tests are the source of truth.
+---
+
+## 最終反思
+
+TDD 流程讓 AI 的使用變得透明且可咎責 (accountable)：
+- 測試作為評估 AI 建議的規格。
+- 如果接受 AI 建議後測試通過，那它很可能是正確的。
+- 如果測試失敗，必須拒絕或修改建議。
+- 這建立了一個客觀的回饋迴圈。
+
+這與不經測試就接受 AI 程式碼有根本上的不同——在這裡，測試才是真相的來源。

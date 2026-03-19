@@ -1,22 +1,22 @@
-# Test Cases Documentation - Week 02 Assignment
+# 測試案例文件 - Week 02 作業
 
-This document provides custom test datasets designed to validate critical functionality and edge cases across all three tasks.
+本文件提供了自訂的測試資料集，旨在驗證所有三個任務的關鍵功能與邊界情況。
 
 ---
 
-## Task 1: Sequence Clean - Custom Test Cases
+## Task 1: 序列清理 (Sequence Clean) - 自訂測試案例
 
-### Test Case 1: Normal Case with Mixed Numbers
+### 測試案例 1: 包含混合數字的正常情況
 
-**Category**: Normal Case
-**Purpose**: Verify basic functionality with duplicates and even/odd mix
+**分類**: 正常情況 (Normal Case)
+**目的**: 驗證具備重複數字以及奇偶數混合的基本功能
 
-**Input**:
+**輸入**:
 ```
 5 3 5 2 9 2 8 3 1
 ```
 
-**Expected Output**:
+**預期輸出**:
 ```
 dedupe: 5 3 2 9 8 1
 asc: 1 2 2 3 3 5 5 8 9
@@ -24,7 +24,7 @@ desc: 9 8 5 5 3 3 2 2 1
 evens: 2 2 8
 ```
 
-**Actual Output** (after implementation):
+**實際輸出** (實作後):
 ```
 dedupe: 5 3 2 9 8 1
 asc: 1 2 2 3 3 5 5 8 9
@@ -32,25 +32,25 @@ desc: 9 8 5 5 3 3 2 2 1
 evens: 2 2 8
 ```
 
-**Result**: ✓ PASS
+**結果**: ✓ 通過 (PASS)
 
-**Corresponding Test Function**: `test_normal_case_deduplicate`, `test_normal_case_ascending_sort`, `test_normal_case_descending_sort`, `test_extract_evens_normal`
+**對應的測試函式**: `test_normal_case_deduplicate`, `test_normal_case_ascending_sort`, `test_normal_case_descending_sort`, `test_extract_evens_normal`
 
-**Key Validation Point**: Dedup preserves order (5 before 3), even extraction maintains original position
+**關鍵驗證點**: 去重後保留原始順序 (5 在 3 前面)，提取偶數後維持原始位置。
 
 ---
 
-### Test Case 2: Edge Case - Negative Numbers and Zero
+### 測試案例 2: 邊界情況 - 負數與零
 
-**Category**: Edge Case
-**Purpose**: Verify handling of negative numbers (especially negative evens) and zero
+**分類**: 邊界情況 (Edge Case)
+**目的**: 驗證處理負數 (特別是負偶數) 以及零的能力
 
-**Input**:
+**輸入**:
 ```
 -4 -3 0 2 -2 5 6
 ```
 
-**Expected Output**:
+**預期輸出**:
 ```
 dedupe: -4 -3 0 2 -2 5 6
 asc: -4 -3 -2 0 2 5 6
@@ -58,7 +58,7 @@ desc: 6 5 2 0 -2 -3 -4
 evens: -4 0 2 -2 6
 ```
 
-**Actual Output** (after implementation):
+**實際輸出** (實作後):
 ```
 dedupe: -4 -3 0 2 -2 5 6
 asc: -4 -3 -2 0 2 5 6
@@ -66,28 +66,28 @@ desc: 6 5 2 0 -2 -3 -4
 evens: -4 0 2 -2 6
 ```
 
-**Result**: ✓ PASS
+**結果**: ✓ 通過 (PASS)
 
-**Corresponding Test Function**: `test_with_negative_numbers`, `test_negative_evens`, `test_zero_in_list`
+**對應的測試函式**: `test_with_negative_numbers`, `test_negative_evens`, `test_zero_in_list`
 
-**Key Validation Point**: 
-- Negative even numbers (`-4`, `-2`) correctly identified
-- Zero correctly treated as even
-- Sorting handles negative numbers correctly
+**關鍵驗證點**: 
+- 正確識別出負偶數 (`-4`, `-2`)
+- 零被正確地視為偶數
+- 排序能正確處理負數
 
 ---
 
-### Test Case 3: Boundary Case - Empty and Single Element
+### 測試案例 3: 極端邊界 - 空列表與單一元素
 
-**Category**: Boundary Case
-**Purpose**: Verify edge conditions with minimal input
+**分類**: 邊界情況 (Boundary Case)
+**目的**: 驗證最少輸入量時的邊界條件
 
-**Input Set A** (Empty):
+**輸入組 A** (空列表):
 ```
-(empty list)
+(空列表)
 ```
 
-**Expected Output A**:
+**預期輸出 A**:
 ```
 dedupe: (empty)
 asc: (empty)
@@ -95,12 +95,12 @@ desc: (empty)
 evens: (empty)
 ```
 
-**Input Set B** (Single element):
+**輸入組 B** (單一元素):
 ```
 7
 ```
 
-**Expected Output B**:
+**預期輸出 B**:
 ```
 dedupe: 7
 asc: 7
@@ -108,57 +108,57 @@ desc: 7
 evens: (empty)
 ```
 
-**Actual Output**: ✓ PASS
+**實際輸出**: ✓ 通過 (PASS)
 
-**Corresponding Test Function**: `test_empty_list`, `test_single_element`
+**對應的測試函式**: `test_empty_list`, `test_single_element`
 
-**Key Validation Point**: No crashes, proper handling of edge conditions
+**關鍵驗證點**: 程式不會崩潰，適當處理邊界條件。
 
 ---
 
-### Test Case 4: Critical Path - Order Preservation in Deduplication
+### 測試案例 4: 關鍵路徑 - 去重時的順序保留
 
-**Category**: Order Preservation Verification
-**Purpose**: Critical requirement: dedup must preserve **first occurrence order**
+**分類**: 順序保留驗證 (Order Preservation)
+**目的**: 關鍵需求：去重必須保留 **第一次出現的順序**
 
-**Input**:
+**輸入**:
 ```
 3 1 4 1 5 9 2 6 5 3 5
 ```
 
-**Expected Output**:
+**預期輸出**:
 ```
 dedupe: 3 1 4 5 9 2 6
-(NOT: 1 2 3 4 5 6 9)
+(不是: 1 2 3 4 5 6 9)
 ```
 
-**Actual Output**:
+**實際輸出**:
 ```
 dedupe: 3 1 4 5 9 2 6
 ```
 
-**Result**: ✓ PASS
+**結果**: ✓ 通過 (PASS)
 
-**Corresponding Test Function**: `test_dedup_preserves_order`
+**對應的測試函式**: `test_dedup_preserves_order`
 
-**Key Validation Point**: 
-- First occurrence of 3 is at position 0, kept
-- Duplicate 3 at position 9 is removed
-- Order is 3→1→4→5→9→2→6, NOT sorted
+**關鍵驗證點**: 
+- 第一個 3 位在索引 0，被保留
+- 在索引 9 的重複 3 被移除
+- 順序是 3→1→4→5→9→2→6，而不是被排序過的狀態
 
 ---
 
-### Test Case 5: Stress Testing - Many Duplicates
+### 測試案例 5: 壓力測試 - 大量重複項
 
-**Category**: Stress Test / Boundary
-**Purpose**: Verify performance and correctness with high duplication
+**分類**: 壓力測試 / 邊界
+**目的**: 驗證在高度重複狀況下的效能與正確性
 
-**Input**:
+**輸入**:
 ```
 1 1 1 2 2 2 3 3 3 4 4 4 5 5 5
 ```
 
-**Expected Output**:
+**預期輸出**:
 ```
 dedupe: 1 2 3 4 5
 asc: 1 1 1 2 2 2 3 3 3 4 4 4 5 5 5
@@ -166,22 +166,22 @@ desc: 5 5 5 4 4 4 3 3 3 2 2 2 1 1 1
 evens: 2 2 2 4 4 4
 ```
 
-**Actual Output**: ✓ PASS
+**實際輸出**: ✓ 通過 (PASS)
 
-**Corresponding Test Function**: `test_dedup_already_unique` (inverse concept)
+**對應的測試函式**: `test_dedup_already_unique` (反向概念)
 
-**Key Validation Point**: Dedup correctly identifies all 4 duplicates, returns minimal set
+**關鍵驗證點**: 去重能正確識別出所有 4 個重複項，並回傳最小集合。
 
 ---
 
-## Task 2: Student Ranking - Custom Test Cases
+## Task 2: 學生排名 (Student Ranking) - 自訂測試案例
 
-### Test Case 1: Normal Case - Clear Ranking
+### 測試案例 1: 正常情況 - 明確的排名
 
-**Category**: Normal Case
-**Purpose**: Verify basic ranking with no ties
+**分類**: 正常情況 (Normal Case)
+**目的**: 驗證沒有同分狀況下的基本排名
 
-**Input**:
+**輸入**:
 ```
 6 3
 amy 88 20
@@ -192,37 +192,37 @@ leo 75 20
 eva 92 20
 ```
 
-**Expected Output**:
+**預期輸出**:
 ```
 eva 92 20
 zoe 92 21
 bob 88 19
 ```
 
-**Actual Output**:
+**實際輸出**:
 ```
 eva 92 20
 zoe 92 21
 bob 88 19
 ```
 
-**Result**: ✓ PASS
+**結果**: ✓ 通過 (PASS)
 
-**Corresponding Test Function**: `test_normal_ranking_basic`, `test_tiebreak_multiple_conditions`
+**對應的測試函式**: `test_normal_ranking_basic`, `test_tiebreak_multiple_conditions`
 
-**Key Validation Point**: 
-- Highest score (92) students first
-- Among score 92: eva (20 years) before zoe (21 years)
-- Among score 88: bob/ian (both 19) before amy (20)
+**關鍵驗證點**: 
+- 最高分 (92) 的學生排在最前面
+- 在 92 分的學生中：eva (20 歲) 在 zoe (21 歲) 前面
+- 在 88 分的學生中：bob/ian (皆為 19 歲) 在 amy (20 歲) 前面
 
 ---
 
-### Test Case 2: Critical - Three-Way Tie Breaking
+### 測試案例 2: 關鍵情況 - 三方同分打破僵局
 
-**Category**: Tie-Breaking Edge Case
-**Purpose**: Test all three sort criteria (score→age→name)
+**分類**: 同分打破僵局 (Tie-Breaking Edge Case)
+**目的**: 測試所有三個排序條件 (分數→年齡→名字)
 
-**Input**:
+**輸入**:
 ```
 3 3
 zoe 88 19
@@ -230,72 +230,72 @@ alice 88 19
 bob 88 19
 ```
 
-**Expected Output**:
+**預期輸出**:
 ```
 alice 88 19
 bob 88 19
 zoe 88 19
 ```
 
-**Actual Output**:
+**實際輸出**:
 ```
 alice 88 19
 bob 88 19
 zoe 88 19
 ```
 
-**Result**: ✓ PASS
+**結果**: ✓ 通過 (PASS)
 
-**Corresponding Test Function**: `test_tiebreak_by_name_same_score_and_age`
+**對應的測試函式**: `test_tiebreak_by_name_same_score_and_age`
 
-**Key Validation Point**: When score and age tied, alphabetical order by name breaks tie (alice < bob < zoe)
+**關鍵驗證點**: 當分數與年齡都相同時，依名字的字母順序打破僵局 (alice < bob < zoe)
 
 ---
 
-### Test Case 3: Boundary - k Values
+### 測試案例 3: 邊界情況 - k 值極端測試
 
-**Category**: Boundary Case
-**Purpose**: Test extreme k values
+**分類**: 邊界情況 (Boundary Case)
+**目的**: 測試極端的 k 值
 
-**Input Set A** (k=1):
+**輸入組 A** (k=1):
 ```
 2 1
 alice 85 20
 bob 95 19
 ```
 
-**Expected Output A**:
+**預期輸出 A**:
 ```
 bob 95 19
 ```
 
-**Input Set B** (k = total students):
+**輸入組 B** (k = 總學生數):
 ```
 2 2
 alice 85 20
 bob 95 19
 ```
 
-**Expected Output B**:
+**預期輸出 B**:
 ```
 bob 95 19
 alice 85 20
 ```
 
-**Actual Output**: ✓ PASS
+**實際輸出**: ✓ 通過 (PASS)
 
-**Corresponding Test Function**: `test_k_equals_one`, `test_k_equals_total`
+**對應的測試函式**: `test_k_equals_one`, `test_k_equals_total`
 
-**Key Validation Point**: Correctly handles k=1 (single winner) and k=n (all students)
+**關鍵驗證點**: 正確處理 k=1 (單一贏家) 以及 k=n (所有學生) 的情況。
 
 ---
 
-### Test Case 4: Age-Based Tie Breaking
+### 測試案例 4: 基於年齡的打破僵局
 
-**Category**: Secondary Sorting Criterion
-**Purpose**: Verify age breaks ties when scores identical
+**分類**: 次要排序條件 (Secondary Sorting Criterion)
+**目的**: 驗證在分數相同時，年齡能正確打破僵局
 
-**Input**:
+**輸入**:
 ```
 4 4
 student_old 90 30
@@ -304,7 +304,7 @@ student_middle 90 25
 another 85 20
 ```
 
-**Expected Output**:
+**預期輸出**:
 ```
 student_young 90 18
 student_middle 90 25
@@ -312,7 +312,7 @@ student_old 90 30
 another 85 20
 ```
 
-**Actual Output**:
+**實際輸出**:
 ```
 student_young 90 18
 student_middle 90 25
@@ -320,20 +320,20 @@ student_old 90 30
 another 85 20
 ```
 
-**Result**: ✓ PASS
+**結果**: ✓ 通過 (PASS)
 
-**Corresponding Test Function**: `test_tiebreak_by_age_same_score`
+**對應的測試函式**: `test_tiebreak_by_age_same_score`
 
-**Key Validation Point**: At score 90, youngest (18) comes before oldest (30)
+**關鍵驗證點**: 在分數為 90 時，最年輕的 (18) 優先於最年長的 (30)
 
 ---
 
-### Test Case 5: All Identical with Alphabetical Ordering
+### 測試案例 5: 所有條件皆相同，僅剩字母排序
 
-**Category**: Maximum Complexity Tie Breaking
-**Purpose**: Worst-case tie breaking (all identical scores/ages)
+**分類**: 最高複雜度的打破僵局 (Maximum Complexity Tie Breaking)
+**目的**: 最壞情況下的打破僵局 (所有分數/年齡皆相同)
 
-**Input**:
+**輸入**:
 ```
 4 4
 zoe 88 20
@@ -342,7 +342,7 @@ bob 88 20
 charlie 88 20
 ```
 
-**Expected Output**:
+**預期輸出**:
 ```
 alice 88 20
 bob 88 20
@@ -350,7 +350,7 @@ charlie 88 20
 zoe 88 20
 ```
 
-**Actual Output**:
+**實際輸出**:
 ```
 alice 88 20
 bob 88 20
@@ -358,22 +358,22 @@ charlie 88 20
 zoe 88 20
 ```
 
-**Result**: ✓ PASS
+**結果**: ✓ 通過 (PASS)
 
-**Corresponding Test Function**: `test_identical_students_multiple`
+**對應的測試函式**: `test_identical_students_multiple`
 
-**Key Validation Point**: All students have same score/age, pure alphabetical order: alice < bob < charlie < zoe
+**關鍵驗證點**: 所有學生的分數/年齡都相同，純粹依照字母順序排列：alice < bob < charlie < zoe
 
 ---
 
-## Task 3: Log Summary - Custom Test Cases
+## Task 3: 日誌摘要 (Log Summary) - 自訂測試案例
 
-### Test Case 1: Normal Case - Mixed Users and Actions
+### 測試案例 1: 正常情況 - 混合的使用者與動作
 
-**Category**: Normal Case
-**Purpose**: Verify event counting and action frequency detection
+**分類**: 正常情況 (Normal Case)
+**目的**: 驗證事件計數與動作頻率檢測
 
-**Input**:
+**輸入**:
 ```
 8
 alice login
@@ -386,7 +386,7 @@ chris login
 bob logout
 ```
 
-**Expected Output**:
+**預期輸出**:
 ```
 bob 4
 alice 3
@@ -394,7 +394,7 @@ chris 1
 top_action: login 3
 ```
 
-**Actual Output**:
+**實際輸出**:
 ```
 bob 4
 alice 3
@@ -402,51 +402,51 @@ chris 1
 top_action: login 3
 ```
 
-**Result**: ✓ PASS
+**結果**: ✓ 通過 (PASS)
 
-**Corresponding Test Function**: `test_normal_log_summary`
+**對應的測試函式**: `test_normal_log_summary`
 
-**Key Validation Point**: 
-- bob has 4 events (ranked first)
-- alice has 3 events (ranked second)
-- login appears 3 times (most frequent action)
+**關鍵驗證點**: 
+- bob 有 4 個事件 (排名第一)
+- alice 有 3 個事件 (排名第二)
+- login 出現了 3 次 (最頻繁的動作)
 
 ---
 
-### Test Case 2: Boundary - Empty Logs
+### 測試案例 2: 邊界情況 - 空日誌
 
-**Category**: Boundary Case
-**Purpose**: Verify handling of no input
+**分類**: 邊界情況 (Boundary Case)
+**目的**: 驗證處理無輸入的情況
 
-**Input**:
+**輸入**:
 ```
 0
 ```
 
-**Expected Output**:
+**預期輸出**:
 ```
 top_action: 0
 ```
 
-**Actual Output**:
+**實際輸出**:
 ```
 top_action: 0
 ```
 
-**Result**: ✓ PASS
+**結果**: ✓ 通過 (PASS)
 
-**Corresponding Test Function**: `test_empty_logs`
+**對應的測試函式**: `test_empty_logs`
 
-**Key Validation Point**: No crash on empty input, graceful handling
+**關鍵驗證點**: 空輸入時程式不崩潰，進行優雅處理。
 
 ---
 
-### Test Case 3: Critical - Identi Counts with Alphabetical Tie-Break
+### 測試案例 3: 關鍵情況 - 計數相同時依字母順序打破僵局
 
-**Category**: Tie-Breaking Edge Case
-**Purpose**: Users with same event count should be alphabetically ordered
+**分類**: 同分打破僵局 (Tie-Breaking Edge Case)
+**目的**: 事件計數相同的使用者，應該依照字母順序排列
 
-**Input**:
+**輸入**:
 ```
 6
 zoe action1
@@ -457,7 +457,7 @@ david action5
 emma action6
 ```
 
-**Expected Output**:
+**預期輸出**:
 ```
 alice 1
 bob 1
@@ -465,10 +465,10 @@ charlie 1
 david 1
 emma 1
 zoe 1
-top_action: (any of the actions with count 1)
+top_action: (任何一個計數為 1 的動作皆可)
 ```
 
-**Actual Output**:
+**實際輸出**:
 ```
 alice 1
 bob 1
@@ -479,20 +479,20 @@ zoe 1
 top_action: action1 1
 ```
 
-**Result**: ✓ PASS
+**結果**: ✓ 通過 (PASS)
 
-**Corresponding Test Function**: `test_same_user_count_alphabetical`
+**對應的測試函式**: `test_same_user_count_alphabetical`
 
-**Key Validation Point**: When all users have 1 event, alphabetical order: alice < bob < charlie < ... < zoe
+**關鍵驗證點**: 當所有使用者都有 1 個事件時，依字母順序排列：alice < bob < charlie < ... < zoe
 
 ---
 
-### Test Case 4: Action Frequency Detection
+### 測試案例 4: 動作頻率檢測
 
-**Category**: Action Ranking
-**Purpose**: Confirm top_action is correctly identified (highest count)
+**分類**: 動作排名 (Action Ranking)
+**目的**: 確認 top_action 被正確識別 (最高計數)
 
-**Input**:
+**輸入**:
 ```
 7
 alice login
@@ -504,7 +504,7 @@ frank delete
 grace delete
 ```
 
-**Expected Output**:
+**預期輸出**:
 ```
 alice 1
 bob 1
@@ -516,7 +516,7 @@ grace 1
 top_action: login 3
 ```
 
-**Actual Output**:
+**實際輸出**:
 ```
 alice 1
 bob 1
@@ -528,20 +528,20 @@ grace 1
 top_action: login 3
 ```
 
-**Result**: ✓ PASS
+**結果**: ✓ 通過 (PASS)
 
-**Corresponding Test Function**: `test_top_action_most_frequent`
+**對應的測試函式**: `test_top_action_most_frequent`
 
-**Key Validation Point**: login appears 3 times (most), view and delete each appear 2 times
+**關鍵驗證點**: login 出現了 3 次 (最多)，view 和 delete 各出現 2 次。
 
 ---
 
-### Test Case 5: Complex Real-World Scenario
+### 測試案例 5: 複雜的真實場景
 
-**Category**: Stress Test / Complex Mix
-**Purpose**: Multiple users with varying action counts and frequencies
+**分類**: 壓力測試 / 複雜混合 (Stress Test / Complex Mix)
+**目的**: 多個使用者具備不同的動作計數與頻率
 
-**Input**:
+**輸入**:
 ```
 10
 alice login
@@ -556,7 +556,7 @@ david edit
 eve login
 ```
 
-**Expected Output**:
+**預期輸出**:
 ```
 bob 3
 alice 2
@@ -566,7 +566,7 @@ eve 1
 top_action: login 3
 ```
 
-**Actual Output**:
+**實際輸出**:
 ```
 bob 3
 alice 2
@@ -576,53 +576,53 @@ eve 1
 top_action: login 3
 ```
 
-**Result**: ✓ PASS
+**結果**: ✓ 通過 (PASS)
 
-**Corresponding Test Function**: `test_complex_mixed_scenario`
+**對應的測試函式**: `test_complex_mixed_scenario`
 
-**Key Validation Point**: 
-- bob leads with 3 events
-- alice/charlie/david tied at 2 events, alphabetically ordered
-- eve has 1 event
-- login appears 3 times (most common)
+**關鍵驗證點**: 
+- bob 以 3 個事件領先
+- alice/charlie/david 平手各 2 個事件，依字母順序排列
+- eve 有 1 個事件
+- login 出現了 3 次 (最常見)
 
 ---
 
-## Summary Statistics
+## 摘要統計
 
-| Task | Test Cases Provided | Total Assertions | Pass Rate |
+| 任務 | 提供的測試案例 | 總斷言數 | 通過率 |
 |------|---------------------|------------------|-----------|
 | Task 1 | 5 | 20 | 100% |
 | Task 2 | 5 | 15 | 100% |
 | Task 3 | 5 | 15 | 100% |
-| **Total** | **15** | **50** | **100%** |
+| **總計** | **15** | **50** | **100%** |
 
 ---
 
-## Test Design Methodology
+## 測試設計方法論
 
-Each test case was designed following these principles:
+每個測試案例的設計都遵循以下原則：
 
-1. **Purpose Clarity**: Each test validates a specific requirement
-2. **Input Variation**: From empty/minimal to complex with multiple conditions
-3. **Edge Case Coverage**: Negative numbers, zero, empty lists, ties, etc.
-4. **Assertion Specificity**: Verify exact order, not just approximate correctness
-5. **Traceability**: Each test case maps to actual test functions in test_task*.py
-
----
-
-## Key Insights from Test Design
-
-1. **Order Matters**: Task 1 (dedup position), Task 2 (ranking), Task 3 (alphabetical sort)
-2. **Tie-Breaking Complexity**: Multi-key sorting requires careful test design
-3. **Edge Case Discovery**: Negative numbers and zero revealed implementation gaps
-4. **Stress Testing**: High duplication ratios and many identical records test robustness
+1. **目的清晰**: 每個測試都驗證一項特定需求。
+2. **輸入多樣性**: 從空值/最小值到具備多個條件的複雜情況。
+3. **邊界情況覆蓋**: 負數、零、空列表、同分平手等。
+4. **斷言特異性**: 驗證精確的順序，而不僅僅是大致上的正確。
+5. **可追溯性**: 每個測試案例都對應到 `test_task*.py` 中的實際測試函式。
 
 ---
 
-## Future Test Enhancements
+## 測試設計的主要見解
 
-1. **Performance Tests**: Time complexity verification for large inputs (1M+ elements)
-2. **Unicode Tests**: Verify sorting with non-ASCII names
-3. **Precision Tests**: Task 2 with floating-point scores (if requirements change)
-4. **Concurrent Access**: If code is used in multi-threaded environment
+1. **順序至關重要**: Task 1 (去重位置)、Task 2 (排名)、Task 3 (字母排序)。
+2. **打破僵局的複雜度**: 多鍵值排序需要仔細的測試設計。
+3. **發掘邊界情況**: 測試負數與零揭露了實作上的缺漏。
+4. **壓力測試**: 高重複率與大量相同紀錄考驗了程式的穩健性。
+
+---
+
+## 未來測試強化建議
+
+1. **效能測試**: 針對大型輸入 (100萬+ 元素) 進行時間複雜度驗證。
+2. **Unicode 測試**: 驗證非 ASCII 名稱的排序。
+3. **精度測試**: Task 2 若需求改變，加入浮點數分數的測試。
+4. **並發存取 (Concurrent Access)**: 如果程式碼用於多執行緒環境中。
