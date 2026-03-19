@@ -6,6 +6,7 @@
 - `118.py` / `118-easy.py`：UVA 118 (Mutant Flathead Groteque) 機器人指令處理。
 - `272.py` / `272-easy.py`：UVA 272 (TEX Quotes) 雙引號轉換。
 - `299.py` / `299-easy.py`：UVA 299 (Train Swapping) 氣泡排序/逆序對計算。
+- `100.py` / `100-easy.py`：UVA 100 (The 3n + 1 problem) Collatz 猜想與區間最大值。
 - `490.py` / `490-easy.py`：UVA 490 (Rotating Sentences) 字串二維陣列旋轉。
 - `tests/`：包含針對上述四道題目的所有 `unittest` 單元測試檔。
 - `AI_USAGE.md`：AI 輔助開發紀錄。

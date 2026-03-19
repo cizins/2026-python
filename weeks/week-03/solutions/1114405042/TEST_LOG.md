@@ -62,3 +62,19 @@
   OK
   ```
 - 結論：無論句子長短，皆能以順時針 90 度旋轉並正確補上空白字元。
+
+---
+
+## 執行紀錄：UVA 100
+- 執行指令：`python3 -m unittest discover -s tests -p "test_100.py" -v`
+- 執行結果：
+  ```
+  test_easy_solution (test_100.TestUVA100) ... ok
+  test_empty_input (test_100.TestUVA100) ... ok
+  test_reversed_order (test_100.TestUVA100) ... ok
+  test_standard_solution (test_100.TestUVA100) ... ok
+  ----------------------------------------------------------------------
+  Ran 4 tests in 0.001s
+  OK
+  ```
+- 結論：加入全域字典做 memoization 成功加快遞迴速度，對於輸入為 `i > j` 的情況也能安全轉換並以原順序輸出答案。
