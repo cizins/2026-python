@@ -1,0 +1,8 @@
+test_example_1 (__main__.TestEquation) ... ok
+test_example_2 (__main__.TestEquation) ... ok
+test_example_3 (__main__.TestEquation) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.002s
+
+OK

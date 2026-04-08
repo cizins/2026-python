@@ -1,0 +1,11 @@
+test_edge_case (__main__.TestInfiniteRooms) ... ok
+test_edge_case_2 (__main__.TestInfiniteRooms) ... ok
+test_example_1 (__main__.TestInfiniteRooms) ... ok
+test_example_2 (__main__.TestInfiniteRooms) ... ok
+test_example_3 (__main__.TestInfiniteRooms) ... ok
+test_large_case (__main__.TestInfiniteRooms) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.001s
+
+OK

@@ -1,0 +1,9 @@
+test_external_move (__main__.TestMatchstickEquation) ... ok
+test_internal_move (__main__.TestMatchstickEquation) ... ok
+test_leading_zero (__main__.TestMatchstickEquation) ... ok
+test_no_solution (__main__.TestMatchstickEquation) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.000s
+
+OK
